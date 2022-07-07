@@ -1,0 +1,154 @@
+<div class ="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">TaskManagement</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <button class="btn btn-outline-success"data-bs-toggle="modal" data-bs-target="#addTask" type="submit">AddTask</button>
+        </div>
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+        </div>
+      </nav>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">TimeStamp</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">DueDate</th>
+            <th scope="col">Tag</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of taskList">
+            <td>{{task.timestamp}}</td>
+            <td>{{task.title}}</td>
+            <td>{{task.description}}</td>
+            <td>{{task.duedate}}</td>
+            <td>{{task.tag}}</td>
+            <td>{{task.status}}</td>
+            <td>
+                <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#editTask" (click)="editTask(task)">Edit</button>
+                <button type="button" class="btn btn-outline-danger" (click)="deleteTask(task)">Delete</button>
+            </td>
+
+          </tr>
+
+        </tbody>
+      </table>
+
+      
+  
+  <!-- AddTask -->
+  <div class="modal fade" id="addTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add New Task</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="tasDetail">
+                <div class="mb-3">
+                  <label for="exampleInput" class="form-label">TimeStamp</label>
+                  <input type="date" [(ngModel)]="filters.keyword" [value]="CurrentDate" formControlName="timestamp" class="form-control" id="timestamp" aria-describedby="Help">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInput" class="form-label">Title</label>
+                    <input type="text"limit-to="100" [(ngModel)]="filters.sortBy" formControlName="title"class="form-control" id="title" aria-describedby="Help">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInput" class="form-label">Description</label>
+                        <input type="text"limit-to="1000" [(ngModel)]="filters.sortBy"formControlName="description" class="form-control" id="description" aria-describedby="Help">
+                        <div class="mb-3">
+                            <label for="exampleInput" class="form-label">DueDate</label>
+                            <input type="date" [(ngModel)]="filters.sortBy"formControlName="duedate"class="form-control" id="duedate" aria-describedby="Help">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInput" class="form-label">Tag</label>
+                                <input type="text" [(ngModel)]="filters.filter"formControlName="tag"class="form-control" id="tag" aria-describedby="Help">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInput" class="form-label">Status</label>
+                                    <input type="text" [(ngModel)]="filters.filter"formControlName="status"class="form-control" id="status" aria-describedby="Help">
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      <li><a class="dropdown-item" href="#">Open</a></li>
+                                      <li><a class="dropdown-item" href="#">Working</a></li>
+                                      <li><a class="dropdown-item" href="#">Done</a></li>
+                                      <li><a class="dropdown-item" href="#">Overdue</a></li>
+
+                                    </ul>
+                                  </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="addTask()">Add Task</button>
+                  </div>
+            </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- EditTask -->
+  <div class="modal fade" id="editTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Task</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="tasDetail">
+                <div class="mb-3">
+                  <label for="exampleInput" class="form-label">TimeStamp</label>
+                  <input type="date"[(ngModel)]="filters.keyword"formControlName="timestamp" class="form-control" id="timestamp" aria-describedby="Help">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInput" class="form-label">Title</label>
+                    <input type="text" limit-to="100" [(ngModel)]="filters.sortBy" formControlName="title"class="form-control" id="title" aria-describedby="Help">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInput" class="form-label">Description</label>
+                        <input type="text" limit-to="1000" [(ngModel)]="filters.sortBy"formControlName="description" class="form-control" id="description" aria-describedby="Help">
+                        <div class="mb-3">
+                            <label for="exampleInput" class="form-label">DueDate</label>
+                            <input type="date" [(ngModel)]="filters.sortBy" formControlName="duedate"class="form-control" id="duedate" aria-describedby="Help">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInput" class="form-label">Tag</label>
+                                <input type="text"[(ngModel)]="filters.filter" formControlName="tag"class="form-control" id="tag" aria-describedby="Help">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInput" class="form-label">Status</label>
+                                    <input type="text" [(ngModel)]="filters.filter"formControlName="status"class="form-control" id="status" aria-describedby="Help">
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      <li><a class="dropdown-item" href="#">Open</a></li>
+                                      <li><a class="dropdown-item" href="#">Working</a></li>
+                                      <li><a class="dropdown-item" href="#">Done</a></li>
+                                      <li><a class="dropdown-item" href="#">Overdue</a></li>
+
+                                    </ul>
+                                  </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-success" (click)="editTask()">Edit</button>
+                  </div>
+            </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+</div>

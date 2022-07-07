@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'task';
+  title = 'task management';
+
+  public taskdata = [];
+  // Pagination parameters.
+  p: Number = 1;
+  count: Number = 20;
 }
